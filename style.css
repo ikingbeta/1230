@@ -1,0 +1,513 @@
+/* =========================================
+   2025元旦主题 - 现代PC端适配样式表
+   ========================================= */
+
+:root {
+    /* 核心色板 */
+    --primary-red: #d90429;      /* 鲜亮中国红 */
+    --dark-red: #640d14;         /* 深酒红背景 */
+    --gold: #ffd700;             /* 纯金 */
+    --champagne: #fae1dd;        /* 香槟粉白 */
+    --text-white: #ffffff;
+    --text-gold: #ffcc00;
+    
+    /* 界面组件颜色 */
+    --sidebar-bg: rgba(45, 10, 15, 0.6);
+    --main-bg: rgba(255, 255, 255, 0.08);
+    --input-bg: rgba(0, 0, 0, 0.3);
+    --bubble-user: linear-gradient(135deg, #d90429 0%, #ef233c 100%);
+    --bubble-bot: rgba(255, 255, 255, 0.15);
+    
+    /* 尺寸与效果 */
+    --glass-blur: blur(12px);
+    --border-radius-lg: 24px;
+    --border-radius-md: 16px;
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 15px rgba(217, 4, 41, 0.4);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: radial-gradient(circle at top right, #370617, #03071e);
+    color: var(--text-white);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* =========================================
+   背景动画元素
+   ========================================= */
+.new-year-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* 灯笼 */
+.lantern {
+    position: absolute;
+    width: 80px;
+    height: 100px;
+    background: radial-gradient(circle at 30% 30%, #ff4d4d, #990000);
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4);
+    animation: swing 6s ease-in-out infinite;
+}
+.lantern::before, .lantern::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 10px;
+    background: var(--gold);
+}
+.lantern::before { top: -5px; border-radius: 5px 5px 0 0; }
+.lantern::after { bottom: -5px; border-radius: 0 0 5px 5px; }
+.lantern-left { top: -20px; left: 10%; animation-delay: 0s; }
+.lantern-right { top: -10px; right: 10%; animation-delay: 2s; width: 60px; height: 80px; }
+
+@keyframes swing {
+    0%, 100% { transform: rotate(-5deg) translateY(0); }
+    50% { transform: rotate(5deg) translateY(10px); }
+}
+
+/* 烟花微粒 */
+.firework {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--gold);
+    opacity: 0;
+    animation: firework-pop 4s infinite;
+}
+.firework1 { top: 20%; left: 20%; animation-delay: 1s; }
+.firework2 { top: 40%; right: 30%; animation-delay: 3s; }
+.firework3 { bottom: 30%; left: 10%; animation-delay: 2s; }
+
+@keyframes firework-pop {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(2); opacity: 1; }
+    100% { transform: scale(3); opacity: 0; }
+}
+
+/* 雪花 */
+.snowflake {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 1.5rem;
+    animation: fall 15s linear infinite;
+}
+.snowflake:nth-child(6) { left: 15%; animation-duration: 12s; }
+.snowflake:nth-child(7) { left: 45%; animation-duration: 18s; animation-delay: 5s; }
+.snowflake:nth-child(8) { left: 75%; animation-duration: 10s; animation-delay: 2s; }
+.snowflake:nth-child(9) { left: 90%; animation-duration: 20s; }
+
+@keyframes fall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* =========================================
+   主布局 (PC 适配)
+   ========================================= */
+.app-layout {
+    display: flex;
+    width: 90%;
+    max-width: 1400px;
+    height: 90vh;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: var(--glass-blur);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+
+/* ----- 左侧边栏 ----- */
+.sidebar {
+    width: 300px;
+    background: var(--sidebar-bg);
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.logo-icon {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+.logo-text h1 {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 2.2rem;
+    background: linear-gradient(to right, #fff, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 5px;
+}
+.year-tag {
+    background: var(--primary-red);
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.sidebar-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.countdown-card {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: var(--border-radius-md);
+    text-align: center;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+.card-title {
+    font-size: 0.9rem;
+    color: var(--champagne);
+    margin-bottom: 10px;
+}
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    font-size: 1.5rem;
+    color: var(--gold);
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+.nav-item:hover, .nav-item.active {
+    background: linear-gradient(90deg, rgba(217, 4, 41, 0.2), transparent);
+    color: var(--gold);
+    border-left: 3px solid var(--primary-red);
+}
+.nav-item .icon { font-size: 1.2rem; }
+
+.settings-btn-sidebar {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s;
+}
+.settings-btn-sidebar:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* ----- 右侧聊天区 ----- */
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--main-bg);
+    position: relative;
+}
+
+.chat-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #4cc9f0;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #4cc9f0;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+/* 欢迎卡片 */
+.welcome-card {
+    margin: auto;
+    text-align: center;
+    max-width: 500px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 215, 0, 0.1);
+}
+.welcome-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+.welcome-card h2 {
+    color: var(--gold);
+    margin-bottom: 15px;
+    font-family: 'Ma Shan Zheng', cursive;
+}
+.welcome-card p {
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 消息气泡 */
+.message {
+    max-width: 70%;
+    padding: 16px 24px;
+    line-height: 1.6;
+    position: relative;
+    animation: slideUp 0.3s ease;
+}
+.user-message {
+    align-self: flex-end;
+    background: var(--bubble-user);
+    color: white;
+    border-radius: 20px 20px 4px 20px;
+    box-shadow: 0 5px 15px rgba(217, 4, 41, 0.3);
+}
+.bot-message {
+    align-self: flex-start;
+    background: var(--bubble-bot);
+    color: #eee;
+    border-radius: 20px 20px 20px 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 输入区域 */
+.chat-input-area {
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.2);
+}
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    background: var(--input-bg);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 5px;
+    transition: all 0.3s;
+}
+.input-wrapper:focus-within {
+    border-color: var(--primary-red);
+    box-shadow: 0 0 20px rgba(217, 4, 41, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+}
+
+textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 15px 20px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: none;
+    max-height: 120px;
+}
+textarea:focus { outline: none; }
+textarea::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+.send-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    background: var(--primary-red);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    transition: all 0.3s;
+}
+.send-btn:hover {
+    background: #ef233c;
+    transform: scale(1.05);
+}
+
+.input-footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 10px;
+}
+
+/* =========================================
+   设置面板 (模态框风格)
+   ========================================= */
+.settings-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 450px;
+    background: #2b0c11;
+    border-radius: 20px;
+    border: 1px solid var(--gold);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+.settings-panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    background: linear-gradient(90deg, rgba(217, 4, 41, 0.2), transparent);
+    border-radius: 20px 20px 0 0;
+}
+.settings-header h2 { font-size: 1.2rem; color: var(--gold); }
+.close-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.settings-content { padding: 30px; }
+.form-group { margin-bottom: 20px; }
+.new-year-label { display: block; margin-bottom: 8px; color: var(--champagne); font-size: 0.9rem; }
+.new-year-input-field {
+    width: 100%;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-family: inherit;
+}
+.new-year-input-field:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+.button-group { display: flex; gap: 10px; margin-top: 20px; }
+.button-group button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+.new-year-primary-btn { background: var(--gold); color: #4a0404; }
+.new-year-primary-btn:hover { background: #ffea70; }
+.new-year-secondary-btn { background: rgba(255, 255, 255, 0.1); color: white; }
+.new-year-secondary-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+.new-year-tips-box {
+    background: rgba(255, 215, 0, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px dashed rgba(255, 215, 0, 0.3);
+    margin: 20px 0;
+}
+.new-year-tips-box h3 { color: var(--gold); font-size: 0.9rem; margin-bottom: 5px; }
+.new-year-tips-box p { font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); }
+
+/* 遮罩层 */
+.overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 900;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+.overlay.active { opacity: 1; visibility: visible; }
+
+/* 响应式适配 */
+@media (max-width: 900px) {
+    .app-layout { width: 100%; height: 100%; border-radius: 0; flex-direction: column; }
+    .sidebar { width: 100%; height: auto; padding: 15px; flex-direction: row; align-items: center; justify-content: space-between; }
+    .sidebar-body, .sidebar-footer { display: none; } /* 移动端简化 */
+    .chat-main { height: calc(100vh - 80px); }
+}
+
+@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }

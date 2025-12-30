@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025元旦智能助手</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="new-year-bg">
+        <div class="lantern lantern-left"></div>
+        <div class="lantern lantern-right"></div>
+        <div class="firework firework1"></div>
+        <div class="firework firework2"></div>
+        <div class="firework firework3"></div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+    </div>
+
+    <div class="app-layout">
+        <!-- 左侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">🧧</div>
+                <div class="logo-text">
+                    <h1>元旦助手</h1>
+                    <span class="year-tag">2025</span>
+                </div>
+            </div>
+
+            <div class="sidebar-body">
+                <!-- 倒计时卡片 -->
+                <div class="countdown-card">
+                    <div class="card-title">距离2025年元旦还有</div>
+                    <div id="countdown" class="countdown-timer">
+                        <!-- JS填充 -->
+                    </div>
+                </div>
+
+                <!-- 装饰性导航/功能列表 -->
+                <nav class="nav-menu">
+                    <a href="#" class="nav-item active">
+                        <span class="icon">💬</span> 节日对话
+                    </a>
+                    <a href="#" class="nav-item" onclick="alert('敬请期待！')">
+                        <span class="icon">🧧</span> 生成祝福
+                    </a>
+                    <a href="#" class="nav-item" onclick="alert('敬请期待！')">
+                        <span class="icon">🖼️</span> 新年贺卡
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="settings-btn" class="settings-btn-sidebar">
+                    <span class="icon">⚙️</span> 系统设置
+                </button>
+            </div>
+        </aside>
+
+        <!-- 右侧主聊天区 -->
+        <main class="chat-main">
+            <header class="chat-header">
+                <div class="chat-title">
+                    <span class="status-dot"></span>
+                    智能助手在线中
+                </div>
+                <div class="header-actions">
+                    <!-- 可以放清空记录等按钮 -->
+                </div>
+            </header>
+
+            <div id="chat-container" class="chat-messages">
+                <div class="welcome-card">
+                    <div class="welcome-icon">🐍</div>
+                    <h2>金蛇迎春，万事如意</h2>
+                    <p>我是您的元旦智能助手，快来和我聊天吧！我可以为您写祝福语、对春联、聊新年计划。</p>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="input-wrapper">
+                    <textarea id="user-input" placeholder="输入您的问题，比如：'帮我写一段给父母的新年祝福'..." rows="1"></textarea>
+                    <button id="send-btn" class="send-btn">
+                        <span class="icon">🚀</span>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <span>按 Enter 发送，Shift + Enter 换行</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 设置面板 (保持原有ID以便JS工作) -->
+    <div id="settings-panel" class="settings-panel">
+        <div class="settings-header new-year-settings-header">
+            <h2>⚙️ 配置中心</h2>
+            <button id="close-settings" class="close-btn new-year-close">×</button>
+        </div>
+        <div class="settings-content">
+            <div class="form-group">
+                <label class="new-year-label">API地址</label>
+                <input type="text" id="api-url" class="new-year-input-field" placeholder="https://open.bigmodel.cn/api/paas/v4/chat/completions">
+            </div>
+            <div class="form-group">
+                <label class="new-year-label">API Key</label>
+                <input type="password" id="api-key" class="new-year-input-field" placeholder="请输入您的API Key">
+            </div>
+            <div class="form-group">
+                <label class="new-year-label">模型名称</label>
+                <input type="text" id="model-name" class="new-year-input-field" value="glm-4" placeholder="glm-4">
+            </div>
+            
+            <div class="new-year-tips-box">
+                <h3>💡 小贴士</h3>
+                <p>🔑 API Key 将安全存储在数据库中</p>
+                <p>📡 默认使用智谱AI GLM-4 模型</p>
+            </div>
+
+            <div class="button-group">
+                <button id="test-config" class="new-year-secondary-btn">🧪 测试连接</button>
+                <button id="save-config" class="new-year-primary-btn">💾 保存配置</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- 加载动画 -->
+    <div id="loader" class="loader new-year-loader">
+        <div class="new-year-spinner">
+            <div class="spinner-icon">🏮</div>
+            <div class="spinner-text">正在连接元旦信号...</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
